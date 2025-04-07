@@ -13,11 +13,27 @@ const notificationSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["mentorship", "job", "system", "resource"],
+      enum: [
+        "mentorship_request", // Mentor receives a request
+        "mentorship_accepted", // Student gets accepted
+        "mentorship_rejected", // Student gets rejected
+        "job_application", // Employer receives an application
+        "new_job", // New job post
+        "application_update", // Job seeker gets an update (hired/rejected)
+        "system", // System-wide notifications
+        "resource", // Notifications about resources
+        "mentorship",
+        "job",
+      ],
       required: true,
     },
     relatedId: {
       type: mongoose.Schema.Types.ObjectId,
+      required: false,
+    },
+    triggeredBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: false,
     },
     isRead: {

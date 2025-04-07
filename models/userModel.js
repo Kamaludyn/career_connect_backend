@@ -98,7 +98,7 @@ const userSchema = new mongoose.Schema(
     postedJobs: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Job",
+        ref: "Job", // Reference to the Job model (For employers)
       },
     ],
   },

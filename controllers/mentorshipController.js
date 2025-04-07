@@ -48,8 +48,9 @@ const sendMentorshipRequest = async (req, res) => {
     await Notification.create({
       user: mentorId, // Notify the mentor
       message: `${req.user.othername} ${req.user.surname} has sent you a mentorship request.`,
-      type: "mentorship",
+      type: "mentorship_request",
       relatedId: mentorshipRequest._id, // Links to the request
+      triggeredBy: menteeId, // The mentee that triggered the notification
     });
 
     res.status(201).json({ message: "Mentorship request sent" });
@@ -102,9 +103,10 @@ const acceptMentorshipRequest = async (req, res) => {
 
     await Notification.create({
       user: mentorship.mentee, // Notify the student
-      message: "Congratulations, your mentorship request has been accepted!",
-      type: "mentorship",
+      message: `Congratulations, ${req.user.surname}, ${req.user.othername} accepted your mentorship request!`,
+      type: "mentorship_accepted",
       relatedId: mentorship._id, // Links to the mentorship request
+      triggeredBy: userId, // The mentor who triggered the notification
     });
 
     res.status(200).json({ message: "Mentorship request accepted" });
@@ -137,9 +139,10 @@ const rejectMentorshipRequest = async (req, res) => {
     // Notify student
     await Notification.create({
       user: mentorship.mentee, //Notify the student
-      message: "Sorry, your mentorship request has been rejected!",
-      type: "mentorship",
+      message: `Sorry, ${req.user.surname}, ${req.user.othername} rejected your mentorship request!`,
+      type: "mentorship_rejected",
       relatedId: mentorship._id,
+      triggeredBy: userId, // The mentor who triggered the notification
     });
 
     res.status(200).json({ message: "Mentorship request rejected" });

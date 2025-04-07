@@ -79,10 +79,11 @@ const createJob = async (req, res) => {
     await Promise.all(
       students.map((student) =>
         Notification.create({
-          user: student._id,
+          user: student._id, // Notify all students
           message: `New job posted: ${job.title}`,
-          type: "job",
+          type: "new_job",
           relatedId: job._id, // Links to the job posting
+          triggeredBy: userId, // The employer who triggered the notification
         })
       )
     );

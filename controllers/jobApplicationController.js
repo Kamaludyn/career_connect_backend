@@ -51,10 +51,11 @@ const applyForJob = async (req, res) => {
 
     // Notify the employer
     await Notification.create({
-      user: job.postedBy, //Notify the job poster(employer)
+      user: job.postedBy, // Notify the job poster(employer)
       message: `New job application for ${job.title}`,
-      type: "job",
-      relatedId: application.id, // Links to the job application
+      type: "job_application",
+      relatedId: job.id, // Links to the job
+      triggeredBy: applicantId, // The applicant who triggered the notification
     });
 
     res.status(201).json({ message: "Job application submitted successfully" });
@@ -98,8 +99,9 @@ const reviewJobApplication = async (req, res) => {
     await Notification.create({
       user: application.applicant, // Notify the applicant
       message: `Your application for "${application.job.title}" has been ${status}.`,
-      type: "job",
-      relatedId: application._id,
+      type: "application_update",
+      relatedId: application.job._id, // Links to the job
+      triggeredBy: employerId, // The employer who triggered the notification
     });
 
     res.status(200).json({ message: `Application ${status} successfully.` });
@@ -108,7 +110,7 @@ const reviewJobApplication = async (req, res) => {
   }
 };
 
-// Get a all jobs application for a job posting
+// Get all jobs application for a job posting
 const getJobApplicationsForJob = async (req, res) => {
   try {
     const { jobId } = req.params;
@@ -137,7 +139,7 @@ const getJobApplicationsForJob = async (req, res) => {
   }
 };
 
-// Get all jobs applied to by an logged-in applicant
+// Get all jobs applied to by a logged-in applicant
 const getJobsAppliedByApplicant = async (req, res) => {
   try {
     const applicantId = req.user.id;

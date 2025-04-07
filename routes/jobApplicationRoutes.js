@@ -16,10 +16,10 @@ const router = express.Router();
 router.post("/:jobId", verifyToken, applyForJob);
 
 // @desc    Review job application
-// @route   PUT /api/applications
+// @route   PUT /api/applications/:applicationId
 // @access  Private (Employers only)
 router.put(
-  "/applications/:applicationId/review",
+  "/:applicationId",
   verifyToken,
   verifyEmployer,
   reviewJobApplication
