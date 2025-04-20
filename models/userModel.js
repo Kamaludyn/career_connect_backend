@@ -101,6 +101,12 @@ const userSchema = new mongoose.Schema(
         ref: "Job", // Reference to the Job model (For employers)
       },
     ],
+    resetPasswordToken: {
+      type: String,
+    },
+    resetPasswordExpires: {
+      type: Date,
+    },
   },
   { timestamps: true }
 );

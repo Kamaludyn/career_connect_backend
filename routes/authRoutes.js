@@ -5,6 +5,9 @@ const {
   getUserProfile,
   updateProfile,
   logoutUser,
+  changePassword,
+  forgotPassword,
+  resetPassword,
 } = require("../controllers/authController");
 const verifyToken = require("../middleware/verifyToken");
 
@@ -34,4 +37,19 @@ router.patch("/profile", verifyToken, updateProfile);
 // @route   POST /api/auth/logout
 // @access  Public
 router.post("/logout", logoutUser);
+
+// @desc    Change Password
+// @route   PUT /api/auth/change-password
+// @access  Private
+router.put("/change-password", verifyToken, changePassword);
+
+// @desc    Forgot password
+// @route   POST /api/auth/forgot-password
+// @access  Private
+router.post("/forgot-password", forgotPassword);
+
+// @desc    Reset password
+// @route   POST /api/auth/reset-password/:token
+// @access  Private
+router.post("/reset-password/:token", resetPassword);
 module.exports = router;
