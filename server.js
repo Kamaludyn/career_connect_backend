@@ -22,6 +22,7 @@ const notificationRoutes = require("./routes/notificationRoutes");
 const reportRoutes = require("./routes/reportRoutes");
 const conversationRoutes = require("./routes/conversationRoutes");
 const messageRoutes = require("./routes/messageRoutes");
+const searchRoutes = require("./routes/searchRoutes");
 
 // Initialize Express app
 const app = express();
@@ -82,6 +83,7 @@ app.use("/api/notifications", notificationRoutes);
 app.use("/api/reports", reportRoutes);
 app.use("/api/conversations", conversationRoutes);
 app.use("/api/messages", messageRoutes);
+app.use("/api/search", searchRoutes);
 
 // Handle undefined routes
 app.use((req, res) => {
