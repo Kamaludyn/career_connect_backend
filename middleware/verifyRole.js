@@ -22,7 +22,7 @@ const verifyAdmin = async (req, res, next) => {
     }
 
     // Attach admin info to request
-    req.admin = admin;
+    req.user = admin;
 
     next();
   } catch (error) {
@@ -36,7 +36,7 @@ const verifyEmployer = async (req, res, next) => {
     // Find user by id
     const user = await User.findById(req.user.id);
 
-     // If user is not found or the user is not an employer return error
+    // If user is not found or the user is not an employer return error
     if (!user || user.role !== "employer") {
       return res
         .status(403)

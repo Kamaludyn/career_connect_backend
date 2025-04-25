@@ -1,12 +1,11 @@
 const User = require("../models/userModel");
 
-// Get All Users (Admin Only)
+// Get All Users
 const getUsers = async (req, res) => {
   try {
     // Fetch all users
     const users = await User.find().select("-password");
     res.status(200).json(users);
-
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
@@ -39,32 +38,13 @@ const getUserById = async (req, res) => {
   }
 };
 
-// Fetch number of users per role
-const getUserCount = async (req, res) => {
-  try {
-    // Get user counts
-    const studentCount = User.countDocument({ role: "student" });
-    const mentorCount = User.countDocument({ role: "mentor" });
-    const employerCount = User.countDocument({ role: "employer" });
-
-    res.status(200).json({
-      students: studentCount,
-      mentors: mentorCount,
-      employers: employerCount,
-      jobs: jobCount,
-    });
-  } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
-  }
-};
-
 // Update User (Self or Admin)
 const updateUser = async (req, res) => {
   try {
-      // Find user by id
+    // Find user by id
     const user = await User.findById(req.params.id);
-    
-     // If user is not found return error
+
+    // If user is not found return error
     if (!user) return res.status(404).json({ message: "User not found" });
 
     // Only allow self-update or admin
@@ -99,7 +79,7 @@ const deleteUser = async (req, res) => {
     // Find user by id
     const user = await User.findById(req.params.id);
 
-     // If user is not found return error
+    // If user is not found return error
     if (!user) return res.status(404).json({ message: "User not found" });
 
     // Delete the user
@@ -115,7 +95,6 @@ module.exports = {
   getUsers,
   getMentors,
   getUserById,
-  getUserCount,
   updateUser,
   deleteUser,
 };

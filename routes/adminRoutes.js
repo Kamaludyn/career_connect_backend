@@ -4,6 +4,8 @@ const {
   loginAdmin,
   logoutAdmin,
   getAdminProfile,
+  getDashboardStats,
+  deleteJobAsAdmin,
 } = require("../controllers/adminController");
 const { verifyAdmin } = require("../middleware/verifyRole");
 
@@ -28,5 +30,15 @@ router.post("/logout", logoutAdmin);
 // @route   POST /api/admin/profile
 // @access  Private
 router.get("/profile", verifyAdmin, getAdminProfile);
+
+// @desc    Get overview dashboard statistics
+// @route   GET /api/admin/count
+// @access  Private
+router.get("/count", verifyAdmin, getDashboardStats);
+
+// @desc    Delete Job
+// @route   GET /api/admin/:id
+// @access  Private
+router.delete("/jobs/:id", verifyAdmin, deleteJobAsAdmin);
 
 module.exports = router;

@@ -194,11 +194,8 @@ const deleteJob = async (req, res) => {
     // Check if the user is an employer who posted the job
     const isJobPoster = job.postedBy.toString() === userId;
 
-    // Check if the user is an admin
-    const isAdmin = await Admin.findById(userId);
-
-    // Allow only the employer who posted the job or an admin to delete
-    if (isAdmin || isJobPoster) {
+        // Allow only the employer who posted the job to delete
+    if (isJobPoster) {
       await Job.findByIdAndDelete(jobId);
       await User.findByIdAndUpdate(job.postedBy, {
         $pull: { postedJobs: jobId },

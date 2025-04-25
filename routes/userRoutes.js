@@ -3,7 +3,6 @@ const {
   getUsers,
   getMentors,
   getUserById,
-  getUserCount,
   updateUser,
   deleteUser,
 } = require("../controllers/userController");
@@ -26,11 +25,6 @@ router.get("/mentors", getMentors);
 // @route   GET /api/users/:id
 // @access  Private
 router.get("/:id", verifyToken, getUserById);
-
-// @desc    Get all users count
-// @route   GET /api/users/count
-// @access  Private
-router.get("/count", verifyAdmin, getUserCount);
 
 // @desc    Update user profile
 // @route   PUT /api/users/:id

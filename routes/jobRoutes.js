@@ -38,7 +38,7 @@ router.get("/:id", getJob);
 // @access  Private (Admin Only)
 router.get("/count", verifyToken, verifyAdmin, getJobsCount);
 
-// @desc    Delete a job
+// @desc    Update a job
 // @route   PUT /api/jobs/:id
 // @access  Privavte (Employers & Admins)
 router.put("/:id", verifyToken, updateJob);
